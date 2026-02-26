@@ -1,65 +1,104 @@
+'use client';
+
+import { useState } from "react";
 import Image from "next/image";
 
 export default function Home() {
+  const [showError, setShowError] = useState(false);
+
+  const sintomas = [
+    "Dor de cabeça",
+    "Tosse",
+    "Febre",
+    "Ressaca",
+    "Bicho de pé",
+    "Olho tremendo",
+    "Dor existencial",
+    "Coração partido",
+    "Vício em memes",
+    "Excesso de fofura",
+  ];
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value !== "") {
+      setShowError(true);
+    } else {
+      setShowError(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+      // Fundo rosa chiclete, sem scroll para facilitar a gravação
+      <main className="h-screen w-full flex flex-col items-center justify-center bg-pink-300 overflow-hidden px-4">
+
+        {/* Container "gordinho" e acolhedor (Aumentei de max-w-xs para max-w-sm) */}
+        <div className="bg-white p-8 rounded-[2rem] border-[5px] border-pink-400 shadow-[6px_6px_0px_0px_rgba(255,105,180,0.5)] w-full max-w-sm flex flex-col items-center text-center">
+
+          {/* IMAGEM DA HELLO KITTY (Aumentei o tamanho e diminuí a borda) */}
+          <div className="w-32 h-32 mb-5 relative rounded-full overflow-hidden border-2 border-pink-300">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+                src="/hellokitty.jpg"
+                alt="Hello Kitty"
+                fill
+                className="object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+
+          {/* Título maior e com mais peso */}
+          <h1 className="text-3xl font-extrabold text-blue-600 mb-8 drop-shadow-sm">
+            Atendimento SUS
+          </h1>
+
+          {/* Label maior */}
+          <label htmlFor="sintomas" className="text-gray-600 font-bold text-base mb-3 block">
+            Selecione seu sintoma:
+          </label>
+
+          <div className="w-full relative mb-3">
+            {/* Select estilizado e maior (Aumentei padding p-4 e texto text-base) */}
+            <select
+                id="sintomas"
+                onChange={handleSelectChange}
+                defaultValue=""
+                className="w-full p-4 border-[4px] border-blue-300 bg-pink-50 rounded-2xl text-gray-700 font-bold text-base focus:outline-none focus:border-pink-500 cursor-pointer appearance-none text-center"
+                style={{textAlignLast: 'center'}}
+            >
+              <option value="" disabled>-- Escolha --</option>
+              {sintomas.map((sintoma, index) => (
+                  <option key={index} value={sintoma}>
+                    {sintoma}
+                  </option>
+              ))}
+            </select>
+
+            {/* Seta do dropdown arredondada (Usando SVG fofo) */}
+            <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+              <svg
+                  className="w-5 h-5 text-pink-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+              >
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+
+          {/* ERRO: Maior e com mais presença visual */}
+          <div
+              className={`mt-4 bg-red-50 border-[2px] border-red-400 p-4 rounded-xl w-full shadow-sm transition-opacity duration-300 ${
+                  showError ? "opacity-100" : "opacity-0 pointer-events-none hidden"
+              }`}
           >
-            Documentation
-          </a>
+            <p className="text-base font-extrabold text-red-500 leading-tight">
+              Desculpe, outro usuário já possui esse sintoma.
+            </p>
+          </div>
+
         </div>
       </main>
-    </div>
   );
 }
