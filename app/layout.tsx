@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-// 1. Importar a fonte Nunito
-import { Nunito } from "next/font/google";
+import { Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react"; // <-- Importe aqui
 import "./globals.css";
 
-// 2. Configurar a fonte
-const nunito = Nunito({
+const poppins = Poppins({
     subsets: ["latin"],
-    weight: ["400", "700", "900"], // Pesos variados para brincar
-    variable: "--font-nunito",
+    weight: ["300", "400", "500", "600"],
+    variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
-    title: "Atendimento Hello Kitty SUS",
-    description: "O sistema mais fofo e ineficiente do Brasil",
+    title: "FATEC DSM | Dashboard",
+    description: "Painel de controle acadêmico",
 };
 
 export default function RootLayout({
@@ -22,9 +21,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-br">
-        {/* 3. Aplicar a classe da fonte no body */}
-        <body className={`${nunito.className} bg-pink-100 antialiased`}>
+        <body className={`${poppins.className} bg-neutral-950 text-neutral-200 antialiased selection:bg-white/20`}>
         {children}
+        <Analytics /> {/* <-- Coloque ele aqui embaixo do children */}
         </body>
         </html>
     );
